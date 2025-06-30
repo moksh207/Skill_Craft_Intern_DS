@@ -1,0 +1,60 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+df = pd.read_csv("C:/Users/MOKSH/Downloads/titanic/train.csv")
+
+# 1. Data Cleaning
+
+# Check for missing values
+print(df.isnull().sum())
+
+# Fill missing Age values with median
+df['Age'].fillna(df['Age'].median(), inplace=True)
+
+# Fill missing Embarked values with mode
+df['Embarked'].fillna(df['Embarked'].mode()[0], inplace=True)
+
+# Fill missing Cabin values with 'Unknown'
+df['Cabin'].fillna('Unknown', inplace=True)
+
+
+# 2. Feature Engineering
+
+# Extract title from Name
+df['Title'] = df['Name'].str.extract(' ([A-Za-z]+)\.', expand=False)
+
+# 3. Exploratory Data Analysis (EDA)
+
+# Survival count
+sns.countplot(x='Survived', data=df)
+plt.title("Survival Count")
+plt.xticks([0, 1], ['Not Survived', 'Survived'])
+plt.show()
+
+# Survival by Sex
+sns.countplot(x='Sex', hue='Survived', data=df)
+plt.title("Survival by Sex")
+plt.show()
+
+# Survival by Pclass
+sns.countplot(x='Pclass', hue='Survived', data=df)
+plt.title("Survival by Passenger Class")
+plt.show()
+
+# Age distribution
+sns.histplot(df['Age'], bins=30, kde=True)
+plt.title("Age Distribution")
+plt.show()
+
+# Fare distribution
+sns.histplot(df['Fare'], bins=30, kde=True)
+plt.title("Fare Distribution")
+plt.show()
+
+# Heatmap of correlation
+plt.figure(figsize=(10, 6))
+sns.heatmap(df.corr(numeric_only=True), annot=True, cmap="Blues")
+plt.title("Correlation Matrix")
+plt.show()
