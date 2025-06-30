@@ -1,0 +1,21 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+df = pd.read_csv("C:/Users/MOKSH/Downloads/archive (2)/us_traffic_accidents_2023.csv")
+
+# Group data by month
+monthly_accidents = df.groupby("Month")["NumberOfAccidents"].sum()
+
+# Plotting
+sns.set(style="whitegrid")
+plt.figure(figsize=(12, 6))
+sns.lineplot(x=monthly_accidents.index, y=monthly_accidents.values, marker='o')
+plt.title("Total Traffic Accidents by Month (US, 2023)")
+plt.xlabel("Month")
+plt.ylabel("Number of Accidents")
+plt.xticks(range(1, 13))
+plt.grid(True)
+plt.tight_layout()
+plt.show()
