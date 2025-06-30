@@ -1,0 +1,23 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load the dataset
+file_path = "C:/Users/MOKSH/Downloads/API_SP.POP.TOTL_DS2_en_csv_v2_81108/API_SP.POP.TOTL_DS2_en_csv_v2_81108.csv"
+df = pd.read_csv(file_path, skiprows=4)
+
+# Extracting population data for 2023 and drop missing values
+population_2023 = df[['Country Name', '2023']].dropna()
+
+# Sorting and selecting the top 10 most populous countries
+top10 = population_2023.sort_values(by='2023', ascending=False).head(10)
+
+# Creating a bar chart
+plt.figure(figsize=(12, 6))
+plt.bar(top10['Country Name'], top10['2023'], color='orange')
+plt.xticks(rotation=45, ha='right')
+plt.title('Top 10 Countries by Population in 2023')
+plt.ylabel('Population')
+plt.xlabel('Country')
+plt.tight_layout()
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
